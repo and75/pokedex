@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import PokeMonFilter from '@/components/PokemonFilter.vue';
+import PokemonGrid from '@/components/PokemonGrid.vue';
+import PokemonPaginator from '@/components/PokemonPaginator.vue';
+import { usePokemonStore } from '@/stores/pokemon';
+const { fetchPokemons } = usePokemonStore();
+fetchPokemons();
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+    <PokeMonFilter />
+    <PokemonPaginator />
+    <PokemonGrid />
+    <PokemonPaginator />
 </template>
+
