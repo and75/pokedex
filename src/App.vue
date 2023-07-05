@@ -1,14 +1,23 @@
 <script setup lang="ts">
 /**
- * Magnolia test tecnique
+ * Pokedex test tecnique
  * @author Andrea Porcella 2023
  * @componenet App
  */
-import { useRoute,RouterLink } from "vue-router";
+
+ 
+import { RouterLink } from "vue-router";
 import { RouterView,  } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { usePokemonStore } from '@/stores/pokemon'
+
+//Get computed value from store
 const { loading, error, } = storeToRefs(usePokemonStore());
+
+//Fetch data
+const { fetchPokemons } = usePokemonStore();
+fetchPokemons();
+
 </script>
 
 <template>
@@ -32,7 +41,6 @@ header {
   padding: 1rem 2rem;
   border-radius: 1rem;
 }
-
 .loading{
   width:100;
   text-align: center;
@@ -41,6 +49,5 @@ main {
   max-width: 1280px;
   margin: 2rem auto;
 }
-
 </style>
 

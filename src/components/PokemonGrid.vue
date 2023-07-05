@@ -1,4 +1,10 @@
 <script setup lang="ts">
+/**
+ * Pokedex test tecnique
+ * @author Andrea Porcella 2023
+ * @componenr Grid
+ */
+
 import { RouterLink } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { usePokemonStore } from '@/stores/pokemon'

@@ -1,3 +1,8 @@
+/**
+ * Pokedex test tecnique
+ * @author Andrea Porcella 2023
+ */
+
 import './assets/main.css'
 
 import { createApp } from 'vue'

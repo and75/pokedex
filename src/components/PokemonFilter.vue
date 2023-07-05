@@ -1,23 +1,30 @@
 <script setup lang="ts">
-import { watch } from 'vue';
+/**
+ * Pokedex test tecnique
+ * @author Andrea Porcella 2023
+ * @componenet Filter
+ */
+
+import { watch, ref } from 'vue';
 import { storeToRefs } from 'pinia'
 import { usePokemonStore } from '@/stores/pokemon'
 
-const { count, query, getFilters, order, selectedFilters } = storeToRefs(usePokemonStore());
+const { count, getFilters, order, selectedFilters } = storeToRefs(usePokemonStore());
 const { setOrder, setSelectedFilter, search } = usePokemonStore();
+const query = ref("");
 
-console.log(getFilters);
+// Order Action
 const onOrderChange = () => {
   setOrder();
 }
+// Filter action
 const onFilterChange = (filter: string, value: any) => {
   setSelectedFilter(filter, value)
 }
-const onSearch = (e:any) => {
-  search();
-}
+
+// Watch the change of query value to search start
 watch(query,  () => {
-  search();
+  search(query);
 }, { immediate: true })
 
 </script>
@@ -27,7 +34,7 @@ watch(query,  () => {
     <form>
       <div class="formBlock">
         <label>Rechercher par nom</label>
-        <input type="text" v-model="query" placeholder="Search..." @change="onSearch($event)"/>
+        <input type="text" v-model="query" placeholder="Search..."/>
       </div>
 
       <div class="formBlock">
@@ -116,7 +123,6 @@ watch(query,  () => {
   .filter {
     margin: 0 4rem;
   }
-
   .filter form {
     display: flex;
     flex-direction: row;

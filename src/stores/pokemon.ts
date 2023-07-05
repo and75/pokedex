@@ -1,10 +1,13 @@
-import { defineStore, type SubscriptionCallbackMutationPatchFunction } from 'pinia';
+/**
+ * Pokedex test tecnique
+ * @author Andrea Porcella 2023
+ * Pinia Store
+ */
 
-import { type Payload } from '@/interface/payload';
-import { type PokemonInterface } from '@/interface/pokemon';
-import { Pokemon } from '@/interface/pokemon';
-
+import { defineStore } from 'pinia';
+import { type PokemonInterface } from '@/models/pokemon';
 import axios from 'axios'
+
 interface Filters {
   types: Set<string>
   species: Set<number>
@@ -22,11 +25,11 @@ interface State {
   order: string | null
   loading: boolean
   error: any | null
-  detail : PokemonInterface | null
+  detail: PokemonInterface | null
 }
 
 export const usePokemonStore = defineStore('authUser', {
-  // convert to a function
+ 
   state: (): State => ({
     count: 0,
     pokemons: [],
@@ -40,12 +43,23 @@ export const usePokemonStore = defineStore('authUser', {
     order: 'baseExperience',
     loading: true,
     error: null,
-    detail : null
+    detail: null
   }),
   getters: {
-    getPages: (state) => {
+    /**
+     * getPages
+     * @param state 
+     * @returns number
+     */
+    getPages: (state): number => {
       return Math.round(state.count / state.pageSize)
     },
+    /**
+     * getFilters
+     * @description Get calculated filters
+     * @param state 
+     * @returns Filters
+     */
     getFilters: (state) => {
       let bx: number[] = [];
       let tp: string[] = [];
@@ -58,7 +72,7 @@ export const usePokemonStore = defineStore('authUser', {
       tp.sort();
       bx.sort((a, b) => b - a);
 
-      //Remove double and set on state filter
+      //remove double and set on state filter
       state.filters.types = new Set(tp);
       state.filters.species = new Set(bx);
       return state.filters;
@@ -66,7 +80,8 @@ export const usePokemonStore = defineStore('authUser', {
   },
   actions: {
     /**
-     * Fetch global value
+     * fetchPokemons
+     * @description Fetch global value
      */
     async fetchPokemons() {
       //Open loading
@@ -92,18 +107,27 @@ export const usePokemonStore = defineStore('authUser', {
         this.loading = false
       }
     },
+    /**
+     * fetchDetail
+     * @description Fetch pokemon detail && set value on sotr
+     * @param id 
+     * @return void
+     */
     async fetchDetail(id: any) {
-     
+
       //Open loading
       this.loading = true
-      let finded:PokemonInterface;
+      
+      //Reset detail
+      this.detail = null;
 
       try {
 
         //get pokemon basic list
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon/'+id);
+        const response = await axios.get('https://pokeapi.co/api/v2/pokemon/' + id);
+        
         //get pokemon and merge on list
-        this.detail = response.data; 
+        this.detail = response.data;
 
       } catch (error: any) {
         // Set Error
@@ -111,11 +135,12 @@ export const usePokemonStore = defineStore('authUser', {
       } finally {
         // Close loading
         this.loading = false
-        
+
       }
     },
     /**
-     * Set the filters from existing data
+     * setSelectedFilter
+     * @returns Set the filters from existing data
      * @param filter 
      * @param value 
      */
@@ -137,7 +162,9 @@ export const usePokemonStore = defineStore('authUser', {
       this.filterData();
     },
     /**
-     * Function to display result
+     * filterData
+     * @description setting current page and set the result for page
+     * @returns void 
      */
     filterData(): void {
 
@@ -145,6 +172,7 @@ export const usePokemonStore = defineStore('authUser', {
 
       this.page = 1;
 
+      //Find pokemon by name
       if (this.query?.length > 0) {
         const regex = new RegExp('^' + this.query + '');
         const finded: PokemonInterface[] = this.data.filter(item => regex.test(item.name))
@@ -170,7 +198,6 @@ export const usePokemonStore = defineStore('authUser', {
           return item.types.map((iz: any) => { return iz.type }).some((fz: any) => this.selectedFilters.types.has(fz.name));
         })
       }
-
 
       //Sort filterd
       filtered.sort(
@@ -204,14 +231,28 @@ export const usePokemonStore = defineStore('authUser', {
       this.filteredPokemons = filtered;
 
     },
+    /**
+     * SetPage
+     * @description setting current page and set the result for page
+     * @param page 
+     */
     setPage(page: number): void {
       this.page = page;
       this.pokemons = this.filteredPokemons.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
     },
+    /**
+     * SetOrder
+     * @description Bridge to launch filtering after order value change
+     */
     setOrder(): void {
       this.filterData();
     },
-    search(): void {
+    /**
+    * search
+    * @description Bridge to launch filtering after query value change
+    */
+    search(query:any): void {
+      this.query = query,
       this.filterData()
     },
     // easily reset state using `$reset`

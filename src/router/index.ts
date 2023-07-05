@@ -1,3 +1,9 @@
+/**
+ * Pokedex test tecnique
+ * @author Andrea Porcella 2023
+ * Router
+ */
+
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
