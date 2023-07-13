@@ -17,7 +17,7 @@ describe('Data Store Test', () => {
 
     test('Test intial values ', () => {
         expect(store.count).toEqual(0)
-        expect(store.pageSize).toEqual(25)
+        expect(store.pageSize).toEqual(27)
         expect(store.order).toEqual('baseExperience');
     })
 

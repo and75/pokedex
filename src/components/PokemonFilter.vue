@@ -30,13 +30,8 @@ watch(query,  () => {
 </script>
 
 <template>
-  <section class="filter" v-if="count>0">
+  <section class="filter">
     <form>
-      <div class="formBlock">
-        <label>Rechercher par nom</label>
-        <input type="text" v-model="query" placeholder="Search..."/>
-      </div>
-
       <div class="formBlock">
         <label>Filtrer par type</label>
         <details role="list">
@@ -75,7 +70,7 @@ watch(query,  () => {
       </div>
     </form>
   </section>
-  <section class="resume" v-if="count>0">
+  <section class="resume">
     <p> Pokémon trouvé <b>{{ count }}</b>
       <span v-if="query.length > 0">/ Query : <b>{{ query }}</b></span>
       <span v-if="selectedFilters.types.size > 0">/ Type : <b>{{ [...selectedFilters.types].join(' , ') }}</b></span>
@@ -117,6 +112,7 @@ watch(query,  () => {
 .resume p {
   margin: 0;
   text-align: center;
+  font-size: 0.75rem;
 }
 
 @media screen and (min-width: 820px) {

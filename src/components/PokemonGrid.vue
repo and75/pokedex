@@ -22,7 +22,7 @@ function getImg(val: number) {
         <figure><img :src="getImg(post.id)"></figure>
         <div class="body">
           <h2>{{ post.name }}</h2>
-          <p>Base Experince : <b>{{ post.base_experience }}</b></p>
+          <p>Base Experience : <b>{{ post.base_experience }}</b></p>
           <p>Type : <b>{{ post.types.map((i)=>i.type.name).join(',') }}</b></p>
         </div>
         <div class="footer">

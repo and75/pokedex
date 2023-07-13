@@ -1,5 +1,9 @@
 /* Custom Pink version */
 @import "@picocss/pico/css/pico.min.css";
+:root {
+  --border-radius:1.25rem;
+}
+
 
 /* Pink Light scheme (Default) */
 /* Can be forced with data-theme="light" */
