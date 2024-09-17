@@ -1,9 +1,21 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+/**
+ * Pokedex test tecnique
+ * @author Andrea Porcella 2023
+ * @view Home
+ */
+ import PokeMonSearch from '@/components/PokemonSearch.vue';
+import PokeMonFilter from '@/components/PokemonFilter.vue';
+import PokemonGrid from '@/components/PokemonGrid.vue';
+import PokemonPaginator from '@/components/PokemonPaginator.vue';
+
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+    <PokeMonSearch />
+    <PokeMonFilter />
+    <PokemonPaginator />
+    <PokemonGrid />
+    <PokemonPaginator />
 </template>
+
